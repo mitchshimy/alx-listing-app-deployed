@@ -51,7 +51,7 @@ export default function BookingForm() {
         cvv: "",
         billingAddress: "",
       });
-    } catch (error) {
+    } catch {
       setError("Failed to submit booking.");
     } finally {
       setLoading(false);

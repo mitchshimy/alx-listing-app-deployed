@@ -23,11 +23,11 @@ export default function ReviewSection({ propertyId }: ReviewSectionProps) {
 
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`/api/properties/${propertyId}/reviews`);
+        const response = await axios.get<Review[]>(`/api/properties/${propertyId}/reviews`);
         setReviews(response.data);
       } catch (err) {
-        setError("Failed to load reviews.");
         console.error("Error fetching reviews:", err);
+        setError("Failed to load reviews.");
       } finally {
         setLoading(false);
       }

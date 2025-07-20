@@ -51,14 +51,8 @@ export default function BookingForm() {
         cvv: "",
         billingAddress: "",
       });
-    } catch (err: unknown) {
-      console.error(err);
-      let errorMessage = "Failed to submit booking.";
-      if (axios.isAxiosError(err)) {
-        errorMessage =
-          err.response?.data?.message || err.message || errorMessage;
-      }
-      setError(errorMessage);
+    } catch (error) {
+      setError("Failed to submit booking.");
     } finally {
       setLoading(false);
     }
@@ -67,7 +61,6 @@ export default function BookingForm() {
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow rounded">
       <h2 className="text-2xl font-bold mb-4">Confirm Booking</h2>
-
       <form onSubmit={handleSubmit} className="space-y-4">
         {[
           ["firstName", "First Name"],
@@ -92,27 +85,18 @@ export default function BookingForm() {
           </div>
         ))}
 
-        {error && (
-          <p className="text-red-500 font-semibold">{error}</p>
-        )}
-
-        {success && (
-          <p className="text-green-600 font-semibold">
-            Booking confirmed successfully!
-          </p>
-        )}
-
         <button
           type="submit"
           disabled={loading}
-          className={`w-full py-2 rounded text-white ${
-            loading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700"
-          }`}
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
         >
           {loading ? "Processing..." : "Confirm & Pay"}
         </button>
+
+        {error && <p className="text-red-500 mt-2">{error}</p>}
+        {success && (
+          <p className="text-green-600 mt-2">Booking confirmed successfully!</p>
+        )}
       </form>
     </div>
   );
